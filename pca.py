@@ -26,9 +26,11 @@ class Eigenfaces(object):
 				for filename in os.listdir(sub_path):
 					im = Image.open(os.path.join(sub_path, filename))
 					im = im.convert("L") #数据转换为long类型
+					# print np.asarray(im, dtype=np.uint8)
 					self.X.append(np.asarray(im, dtype=np.uint8))
 					self.y.append(classlabel)
-				classlabel += 1	
+				classlabel += 1
+		# print self.X[29]
 	# 将图片变为行向量	# 生成图片矩阵
 	def genRowMatrix(self):
 		self.Mat = np.empty((0, self.X[0].size), dtype=self.X[0].dtype)
@@ -36,7 +38,7 @@ class Eigenfaces(object):
 			self.Mat = np.vstack((self.Mat, np.asarray(row).reshape(1,-1)))
 	# 计算特征脸
 	def PCA(self, pc_num =0):
-		self.genRowMatrix()	
+		self.genRowMatrix()
 		[n,d] = shape(self.Mat)
 		if ( pc_num <= 0) or ( pc_num>n):		pc_num = n
 		self.mu = self.Mat.mean(axis =0)
@@ -61,8 +63,9 @@ class Eigenfaces(object):
 	def compute(self):
 		self.PCA()
 		for xi in self.X:
-			self.projections.append(self.project(xi.reshape(1,-1))) 
-	
+			self.projections.append(self.project(xi.reshape(1,-1)))
+
+
 	def distEclud(self, vecA, vecB):  # 欧氏距离
 		return linalg.norm(vecA-vecB)+self.eps 
 	
@@ -74,6 +77,7 @@ class Eigenfaces(object):
 		return np.dot(XI-self.mu, self.eig_vect)	
 	#预测最接近的特征脸
 	def predict(self,XI):
+		# print XI
 		minDist = np.finfo('float').max
 		minClass = -1
 		Q = self.project(XI.reshape(1,-1))

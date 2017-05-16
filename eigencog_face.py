@@ -13,10 +13,12 @@ ef.loadimgs("orl_faces/")
 ef.compute()
 E = []
 X = mat(zeros((10,10304)))
-for i in xrange(16):
+for i in range(16):
 	X = ef.Mat[i*10:(i+1)*10,:].copy()
 	# X = ef.normalize(X.mean(axis =0),0,255)
 	X = X.mean(axis =0)
 	imgs = X.reshape(112,92)
+	# ef.subplot(title="AT&T Eigen Facedatabase", images=imgs)
 	E.append(imgs)
-ef.subplot(title="AT&T Eigen Facedatabase", images=E)  
+
+ef.subplot(title="AT&T Eigen Facedatabase", images=E)

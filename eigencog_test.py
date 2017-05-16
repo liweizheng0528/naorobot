@@ -12,5 +12,6 @@ ef.dist_metric=ef.distEclud
 ef.loadimgs("orl_faces/")
 ef.compute()
 # 创建测试集
-testImg = ef.X[69]
-print "实际值 =", ef.y[69], "->", "预测值 =",ef.predict(testImg)
+testImg = ef.X[21]
+print testImg
+print "实际值 =", ef.y[21], "->", "预测值 =",ef.predict(testImg)
